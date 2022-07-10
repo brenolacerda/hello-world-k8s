@@ -60,16 +60,24 @@ jobs:
 #        namespace: default
 #        arguments: --force true
 
-    # Deploy app to AKS
-    - name: Deploy k8s
-      uses: azure/k8s-deploy@v1
+
+    - uses: Azure/k8s-deploy@v3.1
       with:
-          manifests: |
-            manifests/namespace.yml
-            manifests/service.yml
-            manifests/deployment.yml
-          images: |
-            ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
-#          imagepullsecrets: |
-#            hello-world-k8s
-          namespace: hello-world-k8s
+        namespace: 'myapp'
+        manifests: |
+            manifests
+        images: ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
+
+#    # Deploy app to AKS
+#    - name: Deploy k8s
+#      uses: azure/k8s-deploy@v1
+#      with:
+#          manifests: |
+#            manifests/namespace.yml
+#            manifests/service.yml
+#            /manifests/deployment.yml
+#          images: |
+#            ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
+##          imagepullsecrets: |
+##            hello-world-k8s
+#          namespace: hello-world-k8s
