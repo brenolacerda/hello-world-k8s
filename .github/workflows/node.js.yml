@@ -23,12 +23,12 @@ jobs:
 
 
     steps:
-#    - uses: actions/checkout@v3
-#    - name: Use Node.js ${{ matrix.node-version }}
-#      uses: actions/setup-node@v2
-#      with:
-#        node-version: ${{ matrix.node-version }}
-#        cache: 'npm'
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 #    - run: npm run docker:build
 
     - name: Log into registry
