@@ -40,3 +40,36 @@ jobs:
       with:
         push: true
         tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
+
+    - name: Set Context AKS
+      uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: aks-default
+        resource-group: az-rg-br-aks-default
+
+    # Create namespace if doesn't exist
+    - run: |
+        kubectl create namespace hello-world-k8s --dry-run=client -o json | kubectl apply -f -
+
+    - name: Pull ACR
+      uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ secrets.ACR_ENDPOINT }}
+        container-registry-username: ${{ secrets.ACR_USERNAME }}
+        container-registry-password: ${{ secrets.ACR_PASSWORD }}
+        secret-name: hello-world-k8s
+        namespace: hello-world-k8s
+        arguments: --force true
+
+    # Deploy app to AKS
+    - name: Pull ACR
+      uses: azure/k8s-deploy@v1
+      with:
+          manifests: |
+            ${{ github.workspace }}/manifests/deployment.yml
+          images: |
+            ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
+          imagepullsecrets: |
+            hello-world-k8s
+          namespace: hello-world-k8s
