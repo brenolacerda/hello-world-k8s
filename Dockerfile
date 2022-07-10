@@ -2,9 +2,9 @@ FROM node:12.18.1
 
 WORKDIR .
 
-RUN npm install
-
 COPY . .
+
+RUN npm install
 
 EXPOSE 3000
 
