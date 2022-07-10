@@ -61,10 +61,12 @@ jobs:
 #        arguments: --force true
 
     # Deploy app to AKS
-    - name: Pull ACR
+    - name: Deploy k8s
       uses: azure/k8s-deploy@v1
       with:
           manifests: |
+            namespace.yml
+            service.yml
             deployment.yml
           images: |
             ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
