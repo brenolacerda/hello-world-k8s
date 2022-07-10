@@ -23,28 +23,26 @@ jobs:
 
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm run docker:build
+#    - uses: actions/checkout@v3
+#    - name: Use Node.js ${{ matrix.node-version }}
+#      uses: actions/setup-node@v2
+#      with:
+#        node-version: ${{ matrix.node-version }}
+#        cache: 'npm'
+#    - run: npm run docker:build
 
-    - name: Log into registry
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ secrets.ACR_ENDPOINT }}
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
+#    - name: Log into registry
+#      uses: docker/login-action@v1
+#      with:
+#        registry: ${{ secrets.ACR_ENDPOINT }}
+#        username: ${{ secrets.ACR_USERNAME }}
+#        password: ${{ secrets.ACR_PASSWORD }}
 
-    - name: Build & Push
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
-
-
+#    - name: Build & Push
+#      uses: docker/build-push-action@v2
+#      with:
+#        push: true
+#        tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
 
     - uses: azure/login@v1
       with:
@@ -57,28 +55,28 @@ jobs:
         resource-group: 'az-rg-br-aks-default'
         cluster-name: 'aks-default'
 
-    # Create namespace if doesn't exist
-    - run: |
-        kubectl create namespace hello-world-k8s --dry-run=client -o json | kubectl apply -f -
+#    # Create namespace if doesn't exist
+#    - run: |
+#        kubectl create namespace hello-world-k8s --dry-run=client -o json | kubectl apply -f -
 
-    - name: Pull ACR
-      uses: azure/k8s-create-secret@v1
-      with:
-        container-registry-url: ${{ secrets.ACR_ENDPOINT }}
-        container-registry-username: ${{ secrets.ACR_USERNAME }}
-        container-registry-password: ${{ secrets.ACR_PASSWORD }}
-        secret-name: hello-world-k8s
-        namespace: hello-world-k8s
-        arguments: --force true
+#    - name: Pull ACR
+#      uses: azure/k8s-create-secret@v1
+#      with:
+#        container-registry-url: ${{ secrets.ACR_ENDPOINT }}
+#        container-registry-username: ${{ secrets.ACR_USERNAME }}
+#        container-registry-password: ${{ secrets.ACR_PASSWORD }}
+#        secret-name: hello-world-k8s
+#        namespace: hello-world-k8s
+#        arguments: --force true
 
-    # Deploy app to AKS
-    - name: Pull ACR
-      uses: azure/k8s-deploy@v1
-      with:
-          manifests: |
-            ${{ github.workspace }}/manifests/deployment.yml
-          images: |
-            ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
-          imagepullsecrets: |
-            hello-world-k8s
-          namespace: hello-world-k8s
+#    # Deploy app to AKS
+#    - name: Pull ACR
+#      uses: azure/k8s-deploy@v1
+#      with:
+#          manifests: |
+#            ${{ github.workspace }}/manifests/deployment.yml
+#          images: |
+#            ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
+#          imagepullsecrets: |
+#            hello-world-k8s
+#          namespace: hello-world-k8s
