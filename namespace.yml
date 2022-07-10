@@ -1,7 +1,7 @@
-- apiVersion: v1
-  kind: Namespace
-  metadata:
-    name: default-1657428683215
-  spec:
-    finalizers:
-      - kubernetes
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: default-1657428683215
+spec:
+  finalizers:
+    - Kubernetes

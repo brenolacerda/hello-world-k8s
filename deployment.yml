@@ -1,31 +1,31 @@
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: hello-js-k8s
-    namespace: default-1657428683215
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-js-k8s
+  namespace: default-1657428683215
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-js-k8s
+  template:
+    metadata:
+      labels:
         app: hello-js-k8s
-    template:
-      metadata:
-        labels:
-          app: hello-js-k8s
-      spec:
-        nodeSelector:
-          kubernetes.io/os: linux
-        containers:
-          - name: hello-js-k8s
-            image: acraksdefault.azurecr.io/hello-js-k8s:latest
-            ports:
-              - containerPort: 80
-              - containerPort: 3000
-            resources:
-              requests:
-                cpu: 500m
-                memory: 128M
-              limits:
-                cpu: '2'
-                memory: 1G
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+        - name: hello-js-k8s
+          image: acraksdefault.azurecr.io/hello-js-k8s:latest
+          ports:
+            - containerPort: 80
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 500m
+              memory: 128M
+            limits:
+              cpu: '2'
+              memory: 1G
 
