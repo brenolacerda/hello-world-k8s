@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-js-k8s
-  namespace: default-1657428683215
+  namespace: default
 spec:
   replicas: 1
   selector:
