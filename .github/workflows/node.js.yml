@@ -76,7 +76,6 @@ jobs:
         namespace: 'default'
         images: ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
         manifests: |
-            namespace.yml
             deployment.yml
             service.yml
 
