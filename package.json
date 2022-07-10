@@ -1,0 +1,23 @@
+{
+  "name": "hello-world-k8s",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuliohc/hello-world-k8s.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuliohc/hello-world-k8s/issues"
+  },
+  "homepage": "https://github.com/tuliohc/hello-world-k8s#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
