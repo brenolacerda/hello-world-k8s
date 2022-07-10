@@ -44,18 +44,17 @@ jobs:
 #        push: true
 #        tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
 
-    - uses: azure/login@v1
-      with:
-        credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - uses: azure/aks-set-context@v2
+    - name: 'Az CLI login'
+      uses: azure/login@v1
       with:
-        resource-group: 'az-rg-br-aks-default'
-        cluster-name: 'aks-default'
-
-#    # Create namespace if doesn't exist
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    # Create namespace if doesn't exist
 #    - run: |
-#        kubectl create namespace hello-world-k8s --dry-run=client -o json | kubectl apply -f -
+#        az login --service-principal -u ${{secrets.AZURE_CLIENT_ID} -p ${{ secrets.AZURE_CREDENTIALS }} --tenant ${{ secrets.AZURE_TENANT_ID }} -o table
+#        az aks get-credentials -n $aks_name -g $aks_resource_group --admin --overwrite-existing
 
 #    - name: Pull ACR
 #      uses: azure/k8s-create-secret@v1
