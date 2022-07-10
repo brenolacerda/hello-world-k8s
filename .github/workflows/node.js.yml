@@ -65,9 +65,9 @@ jobs:
       uses: azure/k8s-deploy@v1
       with:
           manifests: |
-            /manifests/namespace.yml
-            /manifests/service.yml
-            /manifests/deployment.yml
+            manifests/namespace.yml
+            manifests/service.yml
+            manifests/deployment.yml
           images: |
             ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
 #          imagepullsecrets: |
