@@ -23,13 +23,13 @@ jobs:
 
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm run docker:build
+#    - uses: actions/checkout@v3
+#    - name: Use Node.js ${{ matrix.node-version }}
+#      uses: actions/setup-node@v2
+#      with:
+#        node-version: ${{ matrix.node-version }}
+#        cache: 'npm'
+#    - run: npm run docker:build
 
     - name: Log into registry
       uses: docker/login-action@v1
@@ -38,11 +38,11 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
-    - name: Build & Push
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
+#    - name: Build & Push
+#      uses: docker/build-push-action@v2
+#      with:
+#        push: true
+#        tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
 
 
     - name: 'Az CLI login'
@@ -65,9 +65,9 @@ jobs:
       uses: azure/k8s-deploy@v1
       with:
           manifests: |
-            namespace.yml
-            service.yml
-            deployment.yml
+            deployment/namespace.yml
+            deployment/service.yml
+            deployment/deployment.yml
           images: |
             ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
 #          imagepullsecrets: |
