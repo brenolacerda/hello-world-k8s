@@ -38,11 +38,11 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
-#    - name: Build & Push
-#      uses: docker/build-push-action@v2
-#      with:
-#        push: true
-#        tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
+    - name: Build & Push
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ${{ secrets.ACR_ENDPOINT }}/hello-js-k8s:latest
 
 
     - name: 'Az CLI login'
@@ -50,20 +50,15 @@ jobs:
       with:
         creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CREDENTIALS }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
-#    - name: Pull ACR
-#      uses: azure/k8s-create-secret@v1
-#      with:
-#        container-registry-url: ${{ secrets.ACR_ENDPOINT }}
-#        container-registry-username: ${{ secrets.ACR_USERNAME }}
-#        container-registry-password: ${{ secrets.ACR_PASSWORD }}
-#        secret-name: hello-world-k8s
-#        namespace: default
-#        arguments: --force true
-
-
-#    - run: |
-#        pwd
-#        ls -lha
+    - name: Pull ACR
+      uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ secrets.ACR_ENDPOINT }}
+        container-registry-username: ${{ secrets.ACR_USERNAME }}
+        container-registry-password: ${{ secrets.ACR_PASSWORD }}
+        secret-name: hello-world-k8s
+        namespace: default
+        arguments: --force true
 
     - uses: azure/aks-set-context@v1
       with:
@@ -79,16 +74,6 @@ jobs:
             deployment.yml
             service.yml
 
-#    # Deploy app to AKS
-#    - name: Deploy k8s
-#      uses: azure/k8s-deploy@v1
-#      with:
-#          manifests: |
-#            manifests/namespace.yml
-#            manifests/service.yml
-#            /manifests/deployment.yml
-#          images: |
-#            ${{ secrets.ACR_ENDPOINT }}/hello-world-k8s:${{ github.sha }}
-##          imagepullsecrets: |
-##            hello-world-k8s
-#          namespace: hello-world-k8s
+#    - run: |
+#        pwd
+#        ls -lha
